@@ -24,10 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // --- Typewriter Effect ---
   const typewriterElement = document.getElementById('typewriter');
   const roles = [
-    'Frontend Developer',
-    'Backend Developer',
-    'Full Stack Engineer',
-    'UI/UX Enthusiast',
+    'CyberSecuriy Researcher',
+    'Bug Bounty Hunter',
+    'AI & Data Enthiseast',
   ];
   let roleIndex = 0;
   let charIndex = 0;
@@ -268,70 +267,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // --- Portfolio Filtering & Modals ---
   const projects = [
+    
     {
-      id: 0,
-      title: 'E-commerce Platform',
-      category: 'fullstack',
-      description:
-        'A full-featured e-commerce site with React and Node.js, featuring product catalogs, user authentication, and a Stripe-integrated checkout process.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      features: [
-        'User authentication with JWT',
-        'Product search and filtering',
-        'Shopping cart functionality',
-        'Secure payment processing',
-      ],
-      snippet: `<div class="product-card">\n  <img src={product.image} alt={product.name} />\n  <h3>{product.name}</h3>\n  <p>{product.price}</p>\n  <button>Add to Cart</button>\n</div>`,
-      link: '#',
-    },
-    {
-      id: 1,
-      title: 'Data Visualization Dashboard',
-      category: 'frontend',
-      description:
-        'Interactive dashboard using D3.js for visualizing complex datasets with dynamic charts and graphs.',
-      tech: ['D3.js', 'React', 'Tailwind'],
-      features: [
-        'Multiple chart types (bar, line, pie)',
-        'Real-time data updates',
-        'Export charts as SVG or PNG',
-        'Responsive design for all devices',
-      ],
-      snippet: `const svg = d3.select(ref.current)\n  .attr("width", width)\n  .attr("height", height);\n\nsvg.selectAll("rect")\n  .data(data)\n  .enter()\n  .append("rect");`,
-      link: '#',
-    },
-    {
-      id: 2,
-      title: 'RESTful API for Social App',
-      category: 'backend',
-      description:
-        'A scalable backend API for a social media application, handling user profiles, posts, comments, and likes.',
-      tech: ['Node.js', 'Express', 'PostgreSQL'],
-      features: [
-        'CRUD operations for users, posts, comments',
-        'Secure authentication endpoints',
-        'Pagination for handling large datasets',
-        'Comprehensive API documentation',
-      ],
-      snippet: `app.get('/api/posts', async (req, res) => {\n  try {\n    const posts = await Post.findAll();\n    res.json(posts);\n  } catch (err) {\n    res.status(500).send('Server Error');\n  }\n});`,
-      link: '#',
-    },
-    {
-      id: 3,
-      title: 'Real-time Chat Application',
-      category: 'fullstack',
-      description:
-        'A chat app built with WebSockets for instant communication.',
-      tech: ['Socket.IO', 'React', 'Node.js'],
-      features: [
-        'Instant messaging between users',
-        'User online status indicators',
-        'Room-based chat functionality',
-        'Message history',
-      ],
-      snippet: `io.on('connection', (socket) => {\n  console.log('a user connected');\n  socket.on('chat message', (msg) => {\n    io.emit('chat message', msg);\n  });\n});`,
-      link: '#',
-    },
+    id: 0,
+    title: "Blockchain Framework for Web3 Transactions",
+    category: ">Projects",
+    description:
+      "A peer-to-peer blockchain network of 15 devices running PoW algorithms and consensus mechanisms, integrating smart contracts and secure transaction flows that improved transaction security & anonymity by using cryptography, hashing, and digital signatures.",
+    tech: ["Python", "Cryptography", "Hashing", "Digital Signatures"],
+    features: [
+      "Consensus mechanism implementation (Proof of Work)",
+      "Smart contract integration",
+      "Secure peer-to-peer transactions",
+      "Improved anonymity through cryptographic methods"
+    ],
+    snippet: `<div class="project-card">
+      <h3>Blockchain Network</h3>
+      <p>Decentralized peer-to-peer transactions with smart contracts.</p>
+    </div>`,
+    link: "https://github.com/kingakshat"
+  },
+  {
+    id: 1,
+    title: "Web Application SQL Injection Scanner",
+    category: ">Projects",
+    description:
+      "Developed a Python-based scanner that identifies vulnerabilities in URLs and HTML forms by detecting unsafe input parameters and SQL injection possibilities.",
+    tech: ["Python", "Requests", "Regex"],
+    features: [
+      "Scans URLs and HTML forms",
+      "Detects SQL injection points",
+      "Supports GET and POST methods",
+      "Lightweight and scriptable tool"
+    ],
+    snippet: `<div class="project-card">
+      <h3>SQLi Scanner</h3>
+      <p>Python tool to detect SQL injection vulnerabilities in web apps.</p>
+    </div>`,
+    link: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python"
+  },
+  {
+    id: 2,
+    title: "Network Tracking & Visualization",
+    category: ">Projects",
+    description:
+      "A system integrating Wireshark with Python & Google Earth to monitor network traffic, detect anomalies, and visualize IP geolocation.",
+    tech: ["Wireshark", "Python", "Google Earth"],
+    features: [
+      "Packet capture and parsing",
+      "Anomaly detection",
+      "IP geolocation visualization",
+      "Real-time monitoring dashboard"
+    ],
+    snippet: `<div class="project-card">
+      <h3>Network Visualization</h3>
+      <p>Track and visualize live network traffic on a global map.</p>
+    </div>`,
+    link: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization"
+  },
+
+
+
+
   ];
 
   const portfolioGrid = document.getElementById('portfolio-grid');
@@ -436,27 +433,27 @@ document.addEventListener('DOMContentLoaded', function () {
     .classList.add('active');
 
   const experiences = [
+
     {
-      date: '2021 - Present',
-      role: 'Senior Software Engineer',
-      company: 'Tech Solutions Inc.',
-      description:
-        'Led the development of a new microservices architecture, improving system scalability by 40%. Mentored junior developers and conducted code reviews.',
+      date: "Jan 2025 - Present",
+      role: "Cyber Security Analyst",
+      company: "TCS - GE Vernova ARC, Bengaluru, India",
+      description: "Managed enterprise vulnerability management, running security tools across on-prem and cloud servers, and automated end-to-end vulnerability identification & reporting, reducing response time to 60%. Implemented a passive reconnaissance framework & automating 90% of manual checks using Shell scripts to identify known CVEs, CPEs & exploits for software products. Facilitated & monitored application security scans (SAST, DAST, AVA, VAPT), for efficient of risk tracking. Developed Splunk queries for endpoint detection, identifying and flagging unauthorized and suspicious activities."
     },
     {
-      date: '2019 - 2021',
-      role: 'Software Engineer',
-      company: 'Innovate Co.',
-      description:
-        'Developed and maintained features for a high-traffic web application using React and Node.js. Collaborated with cross-functional teams to deliver high-quality software.',
+      date: "July 2022 - Dec 2024",
+      role: "Data Analysis & Migration Consultant",
+      company: "TCS - GE Vernova, Mumbai, India",
+      "description": "Built & optimized ETL data pipelines to migrate data between ERP systems using SQL & ETL Tools. Analyzed complex data, and delivered actionable insights for data accuracy and streamlined workflows."
     },
     {
-      date: '2017 - 2019',
-      role: 'Junior Developer',
-      company: 'CodeCrafters LLC',
-      description:
-        'Assisted in the development of client websites using HTML, CSS, and JavaScript. Gained experience with version control systems like Git.',
-    },
+      date: "Mar 2021 - May 2021",
+      role: "IT and Network Operations Intern",
+      company: "ALOK Industries LTD, Vapi, Gujarat",
+      "description": "Implemented & configured servers, leveraging Networking tools to enhance network management efficiency."
+    }
+
+
   ];
   const experienceContainer = document.querySelector('#experience .relative');
   experiences.forEach((exp) => {
