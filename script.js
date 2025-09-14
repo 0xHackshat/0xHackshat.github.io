@@ -590,3 +590,46 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const ctx = document.getElementById("skillsRadar");
+
+  if (ctx) {
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: [
+          "Python & Bash Scripting", "Linux", "Networking", "AWS Cloud", "Rest API", "SQL",
+          "Nmap", "Wireshark", "Burp Suite", "Splunk", "Qualys", "Postman", "Django", "Flask",
+          "Vulnerability Assessment", "Risk & Threat Analytics", "Incident Response", "Automation"
+        ],
+        datasets: [{
+          label: "Skill Level",
+          data: [90, 85, 80, 75, 70, 75, 85, 80, 80, 75, 70, 70, 65, 65, 90, 85, 80, 75], // example values
+          backgroundColor: "rgba(34, 197, 94, 0.2)",  // green-400 with opacity
+          borderColor: "#22c55e",
+          pointBackgroundColor: "#22c55e",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "#22c55e"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            angleLines: { color: "#374151" },
+            grid: { color: "#374151" },
+            suggestedMin: 0,
+            suggestedMax: 100,
+            ticks: { stepSize: 20, color: "#9CA3AF" },
+            pointLabels: { color: "#E5E7EB", font: { size: 12 } }
+          }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  }
+});

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akshat</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- highlight.js for syntax highlighting in modals -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -54,30 +54,30 @@
 
         <!-- Hidden hero image for ASCII effect -->
         <img id="hero-img" 
-            src="https://raw.githubusercontent.com/hackshat-07/hackshat-07.github.io/refs/heads/main/images/ascii_crop_2.jpg" 
+            src="https://raw.githubusercontent.com/hackshat-07/hackshat-07.github.io/refs/heads/main/images/ascii_crop_3.jpg" 
             alt="Hero ASCII Source" 
             class="hidden"
             crossorigin="anonymous">
 
 
         <!-- Fake Terminal Card -->
-        <div class="absolute bottom-8 left-8 h-[500px] w-[550px] bg-[#0d1117] border border-gray-700 rounded-xl shadow-2xl z-10">
-            <!-- Fake Window Bar -->
-            <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-700 bg-[#161b22] rounded-t-xl">
-                <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                <span class="ml-4 text-gray-400 text-sm font-mono">terminal</span>
-            </div>
-             
-            
-            <!-- Terminal Content -->
-            <div class="p-4 font-mono text-green-400 text-sm leading-relaxed">
-                <p>$ Hello, I am <span class="text-accent">Akshat Shirsat</span></p>
-                <p>$ I am a <span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
-                <p>$ Scrole down to view my Work 👇</p>
-            </div>
-        </div>
+<div class="absolute bottom-8 left-8 w-full max-w-[550px] aspect-[11/10] bg-[#0d1117] border border-gray-700 rounded-xl shadow-2xl z-10">
+    <!-- Fake Window Bar -->
+    <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-700 bg-[#161b22] rounded-t-xl">
+        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+        <span class="ml-4 text-gray-400 text-xs sm:text-sm font-mono">terminal</span>
+    </div>
+
+    <!-- Terminal Content -->
+    <div class="p-4 font-mono text-green-400 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
+        <p>$ Hello, I am <span class="text-accent">Akshat Shirsat</span></p>
+        <p>$ I am a <span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
+        <p>$ Scroll down to view my Work 👇</p>
+    </div>
+</div>
+
     </section>
 
 
@@ -147,8 +147,59 @@
         </div>
     </section>
 
+
+    <!-- Skills Section -->
+<section id="skills" class="py-20 bg-[#010409] reveal">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-12">
+      <span class="text-accent">02.</span> Skills & Certifications
+    </h2>
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      
+      <!-- Terminal-style Card (Left side) -->
+      <div class="md:w-2/3 order-2 md:order-1">
+        <div class="bg-[#0d1117] border border-gray-800 rounded-lg p-6">
+          <!-- Fake Terminal Bar -->
+          <div class="flex items-center mb-4">
+            <span class="h-3 w-3 bg-red-500 rounded-full mr-2"></span>
+            <span class="h-3 w-3 bg-yellow-500 rounded-full mr-2"></span>
+            <span class="h-3 w-3 bg-green-500 rounded-full"></span>
+          </div>
+          <p class="text-secondary mb-4">> akshat_s@portfolio:~$ cat ./skills.txt</p>
+          <ul class="text-primary leading-relaxed space-y-2">
+            <li>- Cybersecurity & Ethical Hacking</li>
+            <li>- Data Analysis & SQL</li>
+            <li>- Web Security & VAPT</li>
+            <li>- Python & Automation</li>
+            <li>- Certifications: CEH, Security+, AWS Security</li>
+          </ul>
+          <p class="text-secondary mt-4">> <span class="blinking-cursor">_</span></p>
+        </div>
+      </div>
+
+      <!-- Image (Right side) -->
+      <!-- <div class="md:w-1/3 order-1 md:order-2 flex justify-center">
+        <div class="relative w-64 h-64">
+          <img src="https://raw.githubusercontent.com/hackshat-07/hackshat-07.github.io/refs/heads/main/images/aboutme_1.jpg"
+            alt="Skills"
+            class="rounded-full w-full h-full object-cover border-4 border-accent">
+          <div class="absolute inset-0 rounded-full glow opacity-75"></div>
+        </div>
+      </div> -->
+    <!-- Radar Chart (Right side) -->
+    <div class="md:w-1/3 order-1 md:order-2 flex justify-center">
+        <div class="relative w-80 h-80">
+            <canvas id="skillsRadar"></canvas>
+        </div>
+    </div>
+      
+    </div>
+  </div>
+</section>
+
+
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 bg-[#010409] reveal">
+    <section id="portfolio" class="py-20 reveal">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-12"><span class="text-accent">02.</span> My Portfolio</h2>
             <div class="flex justify-center mb-8 space-x-2 md:space-x-4">
@@ -163,7 +214,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 reveal">
+    <section id="experience" class="py-20 bg-[#010409] reveal">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-12"><span class="text-accent">03.</span> My Experience</h2>
             <div class="relative max-w-3xl mx-auto">
@@ -173,7 +224,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-[#010409] reveal">
+    <section id="contact" class="py-20  reveal">
         <div class="container mx-auto px-6 max-w-2xl">
             <h2 class="text-3xl font-bold text-center mb-12"><span class="text-accent">04.</span> Get In Touch</h2>
             <div class="bg-[#161b22] border border-gray-800 rounded-lg p-8">
@@ -205,7 +256,7 @@
     </section>
 
     <!-- Project Modal -->
-    <div id="project-modal-overlay">
+    <div id="project-modal-overlay" class=bg-[#010409] >
         <div id="project-modal">
             <div class="modal-header">
                 <div class="flex items-center">
