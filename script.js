@@ -1,383 +1,134 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // --- Custom Cursor ---
-  const cursorDot = document.getElementById('cursor-dot');
-  window.addEventListener('mousemove', (e) => {
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
-  });
-
-  function updateInteractiveElements() {
-    const interactiveElements = document.querySelectorAll(
-      'a, button, .project-card, input, textarea'
-    );
-    interactiveElements.forEach((el) => {
-      el.addEventListener('mouseenter', () =>
-        cursorDot.classList.add('hovered')
-      );
-      el.addEventListener('mouseleave', () =>
-        cursorDot.classList.remove('hovered')
-      );
+document.addEventListener("DOMContentLoaded", () => {
+  /* =========================================================
+     CUSTOM CURSOR (desktop only)
+  ========================================================= */
+  const cursorDot = document.getElementById("cursor-dot");
+  if (cursorDot) {
+    window.addEventListener("mousemove", (e) => {
+      cursorDot.style.left = e.clientX + "px";
+      cursorDot.style.top = e.clientY + "px";
     });
+
+    function updateInteractiveElements() {
+      document
+        .querySelectorAll("a, button, .project-card, input, textarea")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () =>
+            cursorDot.classList.add("hovered")
+          );
+          el.addEventListener("mouseleave", () =>
+            cursorDot.classList.remove("hovered")
+          );
+        });
+    }
+    updateInteractiveElements();
   }
-  updateInteractiveElements();
 
+  /* =========================================================
+     HERO PARTICLE BACKGROUND (CodePen-style)
+  ========================================================= */
+  const heroCanvas = document.getElementById("hero-canvas");
+  if (heroCanvas) {
+    const ctx = heroCanvas.getContext("2d");
+    let particles = [];
+    const PARTICLE_COUNT = window.innerWidth < 768 ? 40 : 80;
 
+    function resizeCanvas() {
+      heroCanvas.width = heroCanvas.offsetWidth;
+      heroCanvas.height = heroCanvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
+    class Particle {
+      constructor() {
+        this.x = Math.random() * heroCanvas.width;
+        this.y = Math.random() * heroCanvas.height;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.size = Math.random() * 2 + 1;
+      }
 
-    // --- Quote → ASCII → Terminal Sequence ---
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x <= 0 || this.x >= heroCanvas.width) this.vx *= -1;
+        if (this.y <= 0 || this.y >= heroCanvas.height) this.vy *= -1;
+      }
+
+      draw() {
+        ctx.fillStyle = "rgba(88,166,255,0.8)";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+      }
+    }
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+
+  /* =========================================================
+     HERO QUOTES
+  ========================================================= */
   const quotes = [
-  "Ransomware attacks are not only increasing in scale and frequency, but also sophistication. — Roger Spitz",
-  "The internet doesn’t forget, because forgetting isn’t profitable. — Timsux Wales",
-  "A successful hacking methodology is built on accumulated experience with diverse techniques, explored creatively. — Timsux Wales",
-  "Nothing can be hacked without connectivity, even your heart. — Avin29feb",
-  "Collecting intelligence and understanding an adversary's motivations is fundamental to cybersecurity. — Dmitri Alperovitch",
-  "Agentic AI in security is like a seasoned chess grandmaster, anticipating threats before they unfold. — Jason Hishmeh",
-  "Like a lighthouse in a restless sea, cybersecurity shines not by predicting storms, but by facing the unexpected. — Stephane Nappo",
-  "Security doesn’t start with detection, it begins with design. — Timsux Wales",
-  "Security is an outcome of thoughtful design, not a product you install or a checklist you complete. — Timsux Wales",
-  "Security is a people problem wearing a technical costume. — Timsux Wales",
-  "Security doesn’t exist in a vacuum, it lives in the context of money, risk, and reputation. — Timsux Wales",
-  "Cybersecurity will not be saved by corporate decorum. It will be saved by those willing to fail forward and defend relentlessly. — Ludmila Morozova-Buss",
-  "Hackers have underground forums. We have NDAs, corporate decorum... and a false sense of security. — Ludmila Morozova-Buss",
-  "There is no perfect security, only maximum temporary security. — Gun Gun Febrianza",
-  "In the cybersecurity industry, you can pray for peace, but never stop entertaining chaos. — Timsux Wales",
-  "In our shared digital future, hacking and cybersecurity can no longer exist in a black box. — Laura S. Scherling",
-  "It may take legions of cybersecurity advocates before awareness is truly baked into daily routines. — Laura S. Scherling",
-  "The much-lamented 'cybersecurity skills gap' is a myth. The real disease is a leadership gap. — Ludmila Morozova-Buss",
-  "Cybersecurity's greatest failure is a leadership gap, not a skills gap. — Ludmila Morozova-Buss",
-  "Social engineering succeeds only if defaults fire unchallenged. Whoever engineers the situation engineers the outcome. — Timsux Wales"
-];
-
+    "Security doesn’t start with detection, it begins with design.",
+    "There is no perfect security, only temporary security.",
+    "Cybersecurity is a people problem wearing a technical costume.",
+    "Hacking is not about breaking systems, it's about understanding them.",
+  ];
 
   const quoteContainer = document.getElementById("quote-container");
-  const heroImage = new Image();
-  heroImage.crossOrigin = "Anonymous";
-  heroImage.src = document.getElementById("hero-img").src;
+  if (quoteContainer) {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteContainer.textContent = randomQuote;
+    quoteContainer.classList.add("opacity-100");
 
-  // Terminal card (the bottom fake terminal in hero)
-  const terminalCard = document.querySelector(
-    "#hero .absolute.bottom-8"
-  );
-  // terminalCard.style.opacity = "0"; // hide initially
-  // terminalCard.style.transform = "translateY(30px)";
-  // terminalCard.style.transition = "all 1s ease-in-out";
-
-  // 1) Show random quote
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  quoteContainer.textContent = randomQuote;
-  quoteContainer.classList.add("opacity-100");
-
-  function loadAsciiFile(url) {
-  fetch(url)
-    .then(res => res.text())
-    .then(text => {
-      // Convert ANSI-style codes to HTML
-      let parsed = text
-        .replace(/%clr/g, "</span>")
-        .replace(/%whi/g, "<span style='color:white'>")
-        .replace(/%dyel/g, "<span style='color:yellow'>")
-        .replace(/%bld/g, "<span style='font-weight:bold'>")
-        .replace(/%blk/g, "<span style='color:black'>");
-
-      // Split into lines
-      let lines = parsed.split("\n");
-      let container = document.getElementById("ascii-file-output");
-      container.innerHTML = "";
-
-      let i = 0;
-      function showLine() {
-        if (i < lines.length) {
-          container.innerHTML += lines[i] + "\n";
-          i++;
-          setTimeout(showLine, 50); // typing speed (ms per line)
-        } else {
-          // Once finished, fade out ASCII
-          setTimeout(() => {
-            container.style.transition = "opacity 1s";
-            container.style.opacity = "0";
-          }, 1000); // wait 1s before hiding
-        }
-      }
-      showLine();
-    })
-    .catch(err => console.error("Error loading ASCII file:", err));
-}
-
-
-
-  // 2) After 3s, fade out quote and start ASCII
-  setTimeout(() => {
-  // Fade out quote
-  quoteContainer.classList.remove("opacity-100");
-  quoteContainer.classList.add("opacity-0");
-
-  setTimeout(() => {
-    // Start ASCII rendering in the background canvas
-    heroImage.onload = () => {
-      initParticles(heroImage);
-      animate();
-    };
-
-    // Show terminal at the same time
-    terminalCard.style.opacity = "1";
-    terminalCard.style.transform = "translateY(0)";
-
-    // ✅ Load ASCII file into fake terminal
-    loadAsciiFile("aperture-science-01.txt");
-
-  }, 100); // delay after quote disappears
-
-}, 3000); // how long the quote stays visible
-
-
-
-  // --- Typewriter Effect ---
-  const typewriterElement = document.getElementById('typewriter');
-  const roles = [
-    'CyberSecuriy Researcher',
-    'Bug Bounty Hunter',
-    'AI & Data Enthiseast',
-  ];
-  let roleIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-
-  function type() {
-    const currentRole = roles[roleIndex];
-    if (isDeleting) {
-      typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
-      charIndex--;
-    } else {
-      typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
-      charIndex++;
-    }
-
-    if (!isDeleting && charIndex === currentRole.length) {
-      setTimeout(() => (isDeleting = true), 2000);
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-    }
-
-    const typeSpeed = isDeleting ? 100 : 200;
-    setTimeout(type, typeSpeed);
-  }
-  type();
-
-  // --- Pixel Assembler Hero Effect ---
-  const canvas = document.getElementById('hero-canvas');
-  const heroSection = document.getElementById('hero');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  let particleArray = [];
-  const characters = [
-    '{',
-    '}',
-    ';',
-    ':',
-    '=',
-    '+',
-    '-',
-    '*',
-    '/',
-    '>',
-    '<',
-    '(',
-    ')',
-    '[',
-    ']',
-  ];
-
-  const mouse = {
-    x: null,
-    y: null,
-    radius: 100,
-  };
-
-  heroSection.addEventListener('mousemove', function (event) {
-    const rect = heroSection.getBoundingClientRect();
-    mouse.x = event.clientX - rect.left;
-    mouse.y = event.clientY - rect.top;
-  });
-
-  heroSection.addEventListener('mouseleave', function () {
-    mouse.x = null;
-    mouse.y = null;
-  });
-
-  class Particle {
-    constructor(x, y, character, color) {
-      this.x = x;
-      this.y = y;
-      this.character = character;
-      this.color = color;
-      this.baseX = this.x;
-      this.baseY = this.y;
-      this.density = Math.random() * 40 + 5;
-      this.size = 3;
-    }
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.font = '10px Fira Code';
-      ctx.fillText(this.character, this.x, this.y);
-    }
-    update() {
-      let dx = mouse.x - this.x;
-      let dy = mouse.y - this.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      let forceDirectionX = dx / distance;
-      let forceDirectionY = dy / distance;
-      let maxDistance = mouse.radius;
-      let force = (maxDistance - distance) / maxDistance;
-      let directionX = forceDirectionX * force * this.density;
-      let directionY = forceDirectionY * force * this.density;
-
-      if (distance < mouse.radius) {
-        this.x -= directionX;
-        this.y -= directionY;
-      } else {
-        if (this.x !== this.baseX) {
-          let dx = this.x - this.baseX;
-          this.x -= dx / 10;
-        }
-        if (this.y !== this.baseY) {
-          let dy = this.y - this.baseY;
-          this.y -= dy / 10;
-        }
-      }
-    }
+    setTimeout(() => {
+      quoteContainer.classList.remove("opacity-100");
+      quoteContainer.classList.add("opacity-0");
+    }, 3500);
   }
 
-  function initParticles(image) {
-    particleArray = [];
-
-    const heroWidth = canvas.width;
-    const heroHeight = canvas.height;
-
-    const imgAspect = image.width / image.height;
-    const canvasAspect = heroWidth / heroHeight;
-
-    let imgWidth, imgHeight;
-
-    if (imgAspect > canvasAspect) {
-      imgHeight = heroHeight;
-      imgWidth = imgHeight * imgAspect;
-    } else {
-      imgWidth = heroWidth;
-      imgHeight = imgWidth / imgAspect;
-    }
-
-    const startX = heroWidth - imgWidth;
-    let startY;
-
-    if (window.innerWidth > 1024) {
-      startY = (heroHeight - imgHeight) / 2 + 100;
-    } else {
-      startY = (heroHeight - imgHeight) / 2;
-    }
-
-    // Draw image to a temporary canvas to grab pixel data
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCanvas.width = imgWidth;
-    tempCanvas.height = imgHeight;
-    tempCtx.drawImage(image, 0, 0, imgWidth, imgHeight);
-
-    const imageData = tempCtx.getImageData(0, 0, imgWidth, imgHeight);
-
-    // step controls particle density → higher = smoother
-    const step = 9;
-
-    for (let y = 0; y < imageData.height; y += step) {
-      for (let x = 0; x < imageData.width; x += step) {
-        const i = (y * imageData.width + x) * 4;
-        const alpha = imageData.data[i + 3];
-
-        if (alpha > 128) {
-          const r = imageData.data[i];
-          const g = imageData.data[i + 1];
-          const b = imageData.data[i + 2];
-          const color = `rgb(${r},${g},${b})`;
-
-          const randomChar =
-            characters[Math.floor(Math.random() * characters.length)];
-          particleArray.push(
-            new Particle(startX + x, startY + y, randomChar, color)
-          );
-        }
-      }
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particleArray.length; i++) {
-      particleArray[i].draw();
-      particleArray[i].update();
-    }
-    requestAnimationFrame(animate);
-  }
-
-  // const profileImage = new Image();
-  // profileImage.crossOrigin = 'Anonymous';
-  // profileImage.src = document.getElementById('about-img').src;
-  // profileImage.onload = () => {
-  //   initParticles(profileImage);
-  //   animate();
-  // };
-
-  // const heroImage = new Image();
-  heroImage.crossOrigin = 'Anonymous';
-  heroImage.src = document.getElementById('hero-img').src;
-  heroImage.onload = () => {
-    initParticles(heroImage);
-    animate();
-  };
-
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initParticles(profileImage);
-  });
-
-  // --- Scroll Reveal Animation ---
-  const revealElements = document.querySelectorAll('.reveal');
+  /* =========================================================
+     SCROLL REVEAL
+  ========================================================= */
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
           revealObserver.unobserve(entry.target);
         }
       });
     },
     { threshold: 0.1 }
   );
-  revealElements.forEach((el) => revealObserver.observe(el));
 
-  // --- Staggered Skill Bar Animation ---
-  const skillsSection = document.querySelector('#about');
-  const skillBars = document.querySelectorAll('.skill-bar-inner');
-  const skillObserver = new IntersectionObserver(
-    (entries) => {
-      if (entries[0].isIntersecting) {
-        skillBars.forEach((bar, index) => {
-          setTimeout(() => {
-            bar.style.width = bar.getAttribute('data-width');
-          }, index * 150);
-        });
-        skillObserver.unobserve(skillsSection);
-      }
-    },
-    { threshold: 0.5 }
-  );
-  skillObserver.observe(skillsSection);
+  document
+    .querySelectorAll(".reveal")
+    .forEach((el) => revealObserver.observe(el));
 
-  // --- Portfolio Filtering & Modals ---
+  /* =========================================================
+     PORTFOLIO DATA
+  ========================================================= */
   const projects = [
-    
     {
     id: 0,
     title: "Blockchain Framework for Web3 Transactions",
@@ -391,11 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
       "Secure peer-to-peer transactions",
       "Improved anonymity through cryptographic methods"
     ],
-    snippet: `<div class="project-card">
-      <h3>Blockchain Network</h3>
-      <p>Decentralized peer-to-peer transactions with smart contracts.</p>
-    </div>`,
-    link: "https://github.com/kingakshat"
+    snippet: { url: "https://medium.com/@akshatshirsat77/blockchain-powered-vehicle-rentals-a-smarter-safer-mobility-future-9c6fe5422cd5" },
+    link: "https://github.com/R-A-N-G/Blockchain/"
   },
   {
     id: 1,
@@ -410,10 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
       "Supports GET and POST methods",
       "Lightweight and scriptable tool"
     ],
-    snippet: `<div class="project-card">
-      <h3>SQLi Scanner</h3>
-      <p>Python tool to detect SQL injection vulnerabilities in web apps.</p>
-    </div>`,
+    snippet: { url: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python" },
     link: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python"
   },
   {
@@ -429,10 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
       "IP geolocation visualization",
       "Real-time monitoring dashboard"
     ],
-    snippet: `<div class="project-card">
-      <h3>Network Visualization</h3>
-      <p>Track and visualize live network traffic on a global map.</p>
-    </div>`,
+    snippet: { url: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization" },
     link: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization"
   },
 
@@ -447,118 +189,250 @@ document.addEventListener('DOMContentLoaded', function () {
     "Exploited the vulnerability to enumerate database tables and columns",
     "Extracted sensitive data, including a flag, from the database"
   ],
-  snippet: `<img src="https://raw.githubusercontent.com/0xHackshat/0xHackshat7.github.io/refs/heads/main/images/ascii_crop_3.jpg" alt="Solar System CTF Overview" class="rounded-lg w-full" />`,
+  snippet: { url: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6" },
   link: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6"
-}
-
-
-
-
+},
   ];
 
-  const portfolioGrid = document.getElementById('portfolio-grid');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const modalOverlay = document.getElementById('project-modal-overlay');
-  const modalBody = document.querySelector('.modal-body');
-  const modalTabs = document.querySelectorAll('.modal-tab');
+  const portfolioGrid = document.getElementById("portfolio-grid");
+  const filterBtns = document.querySelectorAll(".filter-btn");
 
-  function displayProjects(filter) {
-    portfolioGrid.innerHTML = '';
-    const filteredProjects =
-      filter === 'all'
+  function renderProjects(filter) {
+    if (!portfolioGrid) return;
+    portfolioGrid.innerHTML = "";
+
+    const filtered =
+      filter === "all"
         ? projects
         : projects.filter((p) => p.category === filter);
 
-    filteredProjects.forEach((project) => {
-      const projectCard = `
-                      <div class="project-card rounded-lg overflow-hidden" data-id="${
-                        project.id
-                      }">
-                          <div class="p-6">
-                              <h3 class="text-xl font-bold mb-2 text-accent">${
-                                project.title
-                              }</h3>
-                              <p class="text-secondary mb-4">${project.description.substring(
-                                0,
-                                80
-                              )}...</p>
-                              <div class="flex flex-wrap gap-2 mb-4">
-                                  ${project.tech
-                                    .map(
-                                      (t) =>
-                                        `<span class="bg-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">${t}</span>`
-                                    )
-                                    .join('')}
-                              </div>
-                              <span class="text-green hover:underline">View Details →</span>
-                          </div>
-                      </div>
-                  `;
-      portfolioGrid.innerHTML += projectCard;
+    filtered.forEach((p) => {
+      portfolioGrid.innerHTML += `
+        <div class="project-card rounded-lg p-6" data-id="${p.id}">
+          <h3 class="text-xl font-bold text-accent mb-2">${p.title}</h3>
+          <p class="text-secondary mb-4">${p.description}</p>
+          <div class="flex flex-wrap gap-2">
+            ${p.tech
+              .map(
+                (t) =>
+                  `<span class="bg-gray-700 text-xs px-2 py-1 rounded">${t}</span>`
+              )
+              .join("")}
+          </div>
+        </div>`;
     });
-
-    document.querySelectorAll('.project-card').forEach((card) => {
-      card.addEventListener('click', (e) =>
-        openModal(e.currentTarget.dataset.id)
-      );
-    });
-    updateInteractiveElements();
   }
 
-  function openModal(projectId) {
-    const project = projects.find((p) => p.id == projectId);
-    if (!project) return;
-    updateModalContent(project, 'description');
-    modalOverlay.classList.add('active');
+  renderProjects("all");
+  filterBtns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderProjects(btn.dataset.filter);
+    })
+  );
+
+  /* =========================================================
+     PROJECT MODAL
+  ========================================================= */
+  const modalOverlay = document.getElementById("project-modal-overlay");
+  const modalCloseBtn = document.getElementById("modal-close-btn");
+  const modalBody = document.querySelector("#project-modal .modal-body");
+  const modalTabs = document.querySelectorAll("#project-modal .modal-tab");
+  let activeProject = null;
+
+  function getProjectById(id) {
+    return projects.find((p) => p.id === id) || null;
   }
 
-  function updateModalContent(project, activeTab) {
-    let content = '';
-    modalTabs.forEach((tab) => {
-      tab.classList.toggle('active', tab.dataset.tab === activeTab);
-      tab.onclick = () => updateModalContent(project, tab.dataset.tab);
-    });
-
-    switch (activeTab) {
-      case 'features':
-        content = `<h3 class="text-xl font-bold mb-4 text-accent">Key Features</h3><ul class="list-disc list-inside space-y-2">${project.features
-          .map((f) => `<li>${f}</li>`)
-          .join('')}</ul>`;
-        break;
-      case 'snippet':
-        content = `<h3 class="text-xl font-bold mb-4 text-accent">Code Snippet</h3><pre><code class="language-javascript rounded-lg">${project.snippet}</code></pre>`;
-        break;
-      default:
-        content = `<h3 class="text-xl font-bold mb-4 text-accent">${project.title}</h3><p class="text-primary mb-4">${project.description}</p><a href="${project.link}" target="_blank" class="text-green hover:underline font-bold">Visit Website →</a>`;
+  function getSnippetUrl(project) {
+    if (!project) return "";
+    if (project.snippet && typeof project.snippet === "object") {
+      return project.snippet.url || "";
     }
-    modalBody.innerHTML = content;
-    if (activeTab === 'snippet') {
-      hljs.highlightAll();
+    if (typeof project.snippet === "string") {
+      const raw = project.snippet.trim();
+      if (/^https?:\/\//i.test(raw)) return raw;
+    }
+    return "";
+  }
+
+  function toEmbeddableUrl(rawUrl) {
+    try {
+      const url = new URL(rawUrl);
+      const host = url.hostname.replace(/^www\./, "").toLowerCase();
+
+      if (host === "youtube.com" || host === "m.youtube.com") {
+        const videoId = url.searchParams.get("v");
+        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (host === "youtu.be") {
+        const videoId = url.pathname.replace("/", "");
+        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      return rawUrl;
+    } catch {
+      return rawUrl;
     }
   }
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      displayProjects(btn.dataset.filter);
+  function getHost(rawUrl) {
+    try {
+      return new URL(rawUrl).hostname.replace(/^www\./, "").toLowerCase();
+    } catch {
+      return "";
+    }
+  }
+
+  function shouldUseLinkCard(rawUrl) {
+    const host = getHost(rawUrl);
+    const blockedHosts = [
+      "github.com",
+      "medium.com",
+      "linkedin.com",
+      "gist.github.com",
+      "towardsdatascience.com",
+    ];
+    return blockedHosts.some(
+      (h) => host === h || host.endsWith(`.${h}`)
+    );
+  }
+
+  function renderLinkCard(url, projectTitle) {
+    const host = getHost(url) || "external-link";
+    return `
+      <h3 class="text-xl font-bold text-accent mb-3">External Snippet</h3>
+      <div class="rounded-lg border border-gray-700 bg-[#0d1117] p-4">
+        <p class="text-primary font-semibold mb-1">${projectTitle}</p>
+        <p class="text-secondary mb-3">Direct embedding is blocked by ${host}. Open safely in a new tab.</p>
+        <p class="text-xs text-secondary mb-3">${host}</p>
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-block text-accent underline break-all">Open Snippet URL</a>
+      </div>
+    `;
+  }
+
+  function renderModalTab(project, tab) {
+    if (!modalBody || !project) return;
+
+    if (tab === "description") {
+      modalBody.innerHTML = `
+        <h3 class="text-2xl font-bold text-accent mb-3">${project.title}</h3>
+        <p class="text-secondary leading-relaxed">${project.description}</p>
+      `;
+      return;
+    }
+
+    if (tab === "features") {
+      modalBody.innerHTML = `
+        <h3 class="text-xl font-bold text-accent mb-3">Stack & Links</h3>
+        <ul class="list-disc pl-6 mb-4 text-secondary">
+          ${(project.tech || []).map((t) => `<li>${t}</li>`).join("")}
+        </ul>
+        <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="text-accent underline">Open Project Link</a>
+      `;
+      return;
+    }
+
+    const snippetUrl = getSnippetUrl(project);
+    if (snippetUrl) {
+      if (shouldUseLinkCard(snippetUrl)) {
+        modalBody.innerHTML = renderLinkCard(snippetUrl, project.title);
+        return;
+      }
+
+      const embedUrl = toEmbeddableUrl(snippetUrl);
+      modalBody.innerHTML = `
+        <h3 class="text-xl font-bold text-accent mb-3">Embedded Snippet</h3>
+        <div style="position:relative;width:100%;padding-top:56.25%;border:1px solid #30363d;border-radius:8px;overflow:hidden;background:#0d1117;">
+          <iframe
+            src="${embedUrl}"
+            title="Project snippet embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;"
+          ></iframe>
+        </div>
+        <p class="text-secondary mt-3">If the site blocks embedding, open it directly:</p>
+        <a href="${snippetUrl}" target="_blank" rel="noopener noreferrer" class="text-accent underline break-all">${snippetUrl}</a>
+      `;
+      return;
+    }
+
+    if (typeof project.snippet === "string" && project.snippet.trim()) {
+      modalBody.innerHTML = `
+        <h3 class="text-xl font-bold text-accent mb-3">Snippet</h3>
+        <div class="rounded-md border border-gray-700 p-3">${project.snippet}</div>
+      `;
+      return;
+    }
+
+    modalBody.innerHTML = `
+      <h3 class="text-xl font-bold text-accent mb-3">Snippet</h3>
+      <p class="text-secondary">No snippet URL configured for this project yet.</p>
+    `;
+  }
+
+  function setActiveModalTab(tab) {
+    modalTabs.forEach((btn) =>
+      btn.classList.toggle("active", btn.dataset.tab === tab)
+    );
+    if (activeProject) renderModalTab(activeProject, tab);
+  }
+
+  function openProjectModal(project) {
+    if (!modalOverlay || !project) return;
+    activeProject = project;
+    modalOverlay.classList.add("active");
+    setActiveModalTab("description");
+  }
+
+  function closeProjectModal() {
+    if (!modalOverlay) return;
+    modalOverlay.classList.remove("active");
+    activeProject = null;
+  }
+
+  if (portfolioGrid) {
+    portfolioGrid.addEventListener("click", (e) => {
+      const card = e.target.closest(".project-card");
+      if (!card) return;
+      const id = Number(card.dataset.id);
+      const project = getProjectById(id);
+      openProjectModal(project);
+    });
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", closeProjectModal);
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeProjectModal();
+    });
+  }
+
+  modalTabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!activeProject) return;
+      setActiveModalTab(btn.dataset.tab);
     });
   });
 
-  document
-    .getElementById('modal-close-btn')
-    .addEventListener('click', () => modalOverlay.classList.remove('active'));
-  modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modalOverlay?.classList.contains("active")) {
+      closeProjectModal();
+    }
   });
 
-  displayProjects('all');
-  document
-    .querySelector('.filter-btn[data-filter="all"]')
-    .classList.add('active');
-
+  /* =========================================================
+     EXPERIENCE TIMELINE
+  ========================================================= */
   const experiences = [
-
     {
       date: "Jan 2025 - Present",
       role: "Cyber Security Analyst",
@@ -576,271 +450,340 @@ document.addEventListener('DOMContentLoaded', function () {
       role: "IT and Network Operations Intern",
       company: "ALOK Industries LTD, Vapi, Gujarat",
       "description": "Implemented & configured servers, leveraging Networking tools to enhance network management efficiency."
+    },
+  ];
+
+  const expContainer = document.querySelector("#experience .relative");
+  if (expContainer) {
+    experiences.forEach((e) => {
+      expContainer.innerHTML += `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="text-sm text-secondary">${e.date}</p>
+          <h3 class="text-xl font-bold text-accent">${e.role}</h3>
+          <p class="font-semibold">${e.company}</p>
+          <p>${e.description}</p>
+        </div>`;
+    });
+  }
+
+  /* =========================================================
+     SKILLS RADAR CHART
+  ========================================================= */
+  const skillsRadarCanvas = document.getElementById("skillsRadar");
+  if (skillsRadarCanvas && typeof Chart !== "undefined") {
+    if (window.skillsRadarChart) {
+      window.skillsRadarChart.destroy();
     }
 
+    const skillLabels = [
+      "Penetration Testing",
+      "Security tools & Automation",
+      "Threat Modeling & Code Review",
+      "AWS Cloud",
+      "Linux & Networking",
+      "Python & Bash Scripting",
+      "AI Red Teaming"
+    ];
+    const skillValues = [65, 75, 35, 45, 35, 80, 15];
+    const sectorColors = [
+      "rgba(88, 166, 255, 0.26)",
+      "rgba(57, 211, 83, 0.24)",
+      "rgba(255, 184, 77, 0.24)",
+      "rgba(255, 123, 114, 0.24)",
+      "rgba(165, 180, 252, 0.24)",
+      "rgba(56, 189, 248, 0.24)",
+      "rgba(56, 149, 235, 0.24)",
+    ];
+    const LABEL_FONT_SIZE = 11;
 
-  ];
-  const experienceContainer = document.querySelector('#experience .relative');
-  experiences.forEach((exp) => {
-    const item = `<div class="timeline-item"><div class="timeline-dot"></div><p class="text-sm text-secondary mb-1">${exp.date}</p><h3 class="text-xl font-bold text-accent">${exp.role}</h3><p class="font-semibold mb-2">${exp.company}</p><p class="text-primary">${exp.description}</p></div>`;
-    experienceContainer.innerHTML += item;
-  });
-
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  mobileMenuBtn.addEventListener('click', () =>
-    mobileMenu.classList.toggle('hidden')
-  );
-
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document
-        .querySelector(this.getAttribute('href'))
-        .scrollIntoView({ behavior: 'smooth' });
-      if (!mobileMenu.classList.contains('hidden'))
-        mobileMenu.classList.add('hidden');
-    });
-  });
-});
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById("skillsRadar");
-  if (!canvas) return;
-  const ctx2d = canvas.getContext("2d");
-
-  // ----- CONFIG: tweak these to taste -----
-  const START_ANGLE = -Math.PI / 2; // where label 0 starts (top)
-  const HIT_RING_TOLERANCE = 60;    // px tolerance from outer ring
-  const CORNER_TOLERANCE = 36;      // px tolerance around the corner point
-  const LABEL_RADIUS_OFFSET = 18;   // how far outside the polygon the corner labels sit
-
-  // fonts (change sizes here)
-  const cornerLabelFont = "600 16px 'Fira Code', monospace";
-  const cornerLabelColor = "#E5E7EB";
-  const cornerLabelHoverColor = "#22c55e";
-
-  const centerBoxTitleFont = "700 16px 'Fira Code', monospace";
-  const centerBoxSkillFont = "12px 'Fira Code', monospace";
-  const centerBoxBg = "rgba(2,6,23,0.78)";
-  // -----------------------------------------
-
-  const subSkills = {
-    "Programming & Scripting": ["Python", "Bash", "Django", "Flask", "Automation"],
-    "Cyber Security & Analytics": ["Incident Response", "Risk & Threat Analytics"],
-    "Security Tools & Assessment": ["Burp Suite", "Qualys", "Vulnerability Assessment"],
-    "OS & Networking": ["Linux", "Networking", "Nmap", "Wireshark"],
-    "Cloud & APIs": ["AWS Cloud", "REST API", "Postman"],
-    "DB's & Data Handling": ["MS SQL", "Oracle SQL", "ETL"]
-  };
-
-  const labels = Object.keys(subSkills);
-  const values = [75, 80, 70, 65, 85, 78]; // example values (0-100)
-
-  // MAIN chart
-  const chart = new Chart(ctx2d, {
-    type: "radar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Skill Level",
-        data: values,
-        backgroundColor: "rgba(34,197,94,0.18)",
-        borderColor: "#22c55e",
-        borderWidth: 2,
-        pointBackgroundColor: "#22c55e",
-        pointBorderColor: "#fff",
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: {
-        // increase padding so corner labels don't get clipped
-        padding: { top: 20, right: 80, bottom: 20, left: 120 }
-      },
-      scales: {
-        r: {
-          startAngle: START_ANGLE,
-          angleLines: { color: "#374151" },
-          grid: { color: "#374151" },
-          suggestedMin: 0,
-          suggestedMax: 100,
-          ticks: { display: false },       // hide numeric tick labels
-          pointLabels: { display: false }  // we draw labels ourselves at corners
-        }
-      },
-      plugins: {
-        legend: { display: false },
-        tooltip: { enabled: false } // we draw our own center box
-      }
-    },
-
-    // plugin handles corner labels, hit-detection & center info box
-    plugins: [{
-      id: "cornerHoverAndLabels",
-
-      afterEvent(chart, args) {
-        const e = args.event;
-        if (!e) return;
-
-        // clear on leave
-        if (e.type === "mouseout" || e.type === "mouseleave") {
-          if (chart._hoveredLabelIndex != null) {
-            chart._hoveredLabelIndex = null;
-            chart.draw();
-          }
-          return;
-        }
-
+    const radarDecorPlugin = {
+      id: "radarDecorPlugin",
+      beforeDatasetsDraw(chart) {
         const r = chart.scales.r;
-        const cx = r.xCenter;
-        const cy = r.yCenter;
-        const mx = e.x;
-        const my = e.y;
-        const dx = mx - cx;
-        const dy = my - cy;
-        const mouseDist = Math.hypot(dx, dy);
+        if (!r) return;
+        const { ctx } = chart;
+        const n = skillLabels.length;
+        const step = (Math.PI * 2) / n;
+        const start = -Math.PI / 2;
 
-        const N = chart.data.labels.length;
-        const TWO_PI = Math.PI * 2;
-        const sector = TWO_PI / N;
-
-        // angle of mouse relative to +X
-        let mouseAngle = Math.atan2(dy, dx);
-        // normalize relative to START_ANGLE
-        let rel = mouseAngle - START_ANGLE;
-        rel = ((rel % TWO_PI) + TWO_PI) % TWO_PI;
-        let approxIdx = Math.round(rel / sector) % N;
-
-        // compute the corner position for approxIdx
-        const angleForIdx = START_ANGLE + approxIdx * sector;
-        const cornerX = cx + Math.cos(angleForIdx) * (r.drawingArea + LABEL_RADIUS_OFFSET);
-        const cornerY = cy + Math.sin(angleForIdx) * (r.drawingArea + LABEL_RADIUS_OFFSET);
-        const distToCorner = Math.hypot(mx - cornerX, my - cornerY);
-
-        let found = null;
-        // prefer exact corner proximity
-        if (distToCorner <= CORNER_TOLERANCE) {
-          found = approxIdx;
-        } else {
-          // fallback: if mouse is roughly on the outer ring (where labels sit), allow hit
-          if (Math.abs(mouseDist - r.drawingArea) <= HIT_RING_TOLERANCE) {
-            found = approxIdx;
-          }
-        }
-
-        if (chart._hoveredLabelIndex !== found) {
-          chart._hoveredLabelIndex = found;
-          chart.draw();
-        }
-      },
-
-      afterDraw(chart) {
-        const ctx = chart.ctx;
-        const r = chart.scales.r;
-        const cx = r.xCenter;
-        const cy = r.yCenter;
-        const N = chart.data.labels.length;
-        const TWO_PI = Math.PI * 2;
-        const sector = TWO_PI / N;
-
-        // DRAW corner labels
         ctx.save();
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        for (let i = 0; i < N; i++) {
-          const angle = START_ANGLE + i * sector;
-          const x = cx + Math.cos(angle) * (r.drawingArea + LABEL_RADIUS_OFFSET);
-          const y = cy + Math.sin(angle) * (r.drawingArea + LABEL_RADIUS_OFFSET);
-
-          // hover highlight
-          if (chart._hoveredLabelIndex === i) {
-            ctx.fillStyle = cornerLabelHoverColor;
-            ctx.font = cornerLabelFont.replace(/\d+px/, match => {
-              // increase hovered font slightly
-              const size = parseInt(match) + 2;
-              return `${size}px`;
-            });
-          } else {
-            ctx.fillStyle = cornerLabelColor;
-            ctx.font = cornerLabelFont;
-          }
-
-          // draw (single-line) label. If labels are long, you can wrap manually.
-          ctx.fillText(chart.data.labels[i], x, y);
+        for (let i = 0; i < n; i++) {
+          const centerAngle = start + i * step;
+          const a0 = centerAngle - step / 2;
+          const a1 = centerAngle + step / 2;
+          ctx.beginPath();
+          ctx.moveTo(r.xCenter, r.yCenter);
+          ctx.arc(r.xCenter, r.yCenter, r.drawingArea, a0, a1);
+          ctx.closePath();
+          ctx.fillStyle = sectorColors[i];
+          ctx.fill();
         }
         ctx.restore();
+      },
+      afterDraw(chart) {
+        const r = chart.scales.r;
+        if (!r) return;
+        const { ctx } = chart;
+        const n = skillLabels.length;
+        const step = (Math.PI * 2) / n;
+        const start = -Math.PI / 2;
+        const isSmallScreen = chart.width < 560;
+        const fontSize = isSmallScreen ? 9 : LABEL_FONT_SIZE;
+        const lineHeight = fontSize + 2;
+        const maxLineWidth = isSmallScreen ? 84 : 130;
+        const edgePadding = 8;
 
-        // DRAW center info box only if hovered
-        const idx = chart._hoveredLabelIndex;
-        if (idx == null) return;
+        function wrapLabel(text) {
+          const words = String(text).split(" ");
+          if (words.length <= 1) return [String(text)];
 
-        const label = chart.data.labels[idx];
-        const skills = subSkills[label] || [];
+          const lines = [];
+          let current = words[0];
+
+          for (let i = 1; i < words.length; i++) {
+            const test = `${current} ${words[i]}`;
+            if (ctx.measureText(test).width <= maxLineWidth) {
+              current = test;
+            } else {
+              lines.push(current);
+              current = words[i];
+            }
+          }
+
+          lines.push(current);
+          return lines;
+        }
 
         ctx.save();
-
-        // measure width dynamically
-        ctx.font = centerBoxTitleFont;
-        const titleWidth = ctx.measureText(label).width;
-        ctx.font = centerBoxSkillFont;
-        const skillsWidths = skills.map(s => ctx.measureText(s).width);
-        const maxTextWidth = Math.max(titleWidth, ...skillsWidths, 60);
-
-        const padX = 16;
-        const padY = 12;
-        const lineHeight = 18;
-        const boxWidth = Math.min(Math.max(200, maxTextWidth + padX * 2), 420);
-        const boxHeight = padY * 2 + lineHeight * (1 + skills.length);
-
-        const boxX = cx - boxWidth / 2;
-        const boxY = cy - boxHeight / 2;
-
-        // background rounded rect
-        ctx.fillStyle = centerBoxBg;
-        roundRect(ctx, boxX, boxY, boxWidth, boxHeight, 8, true, false);
-
-        // title
-        ctx.fillStyle = "#E5E7EB";
-        ctx.font = centerBoxTitleFont;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.font = `600 ${fontSize}px 'Fira Code', monospace`;
+        ctx.textBaseline = "middle";
         ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillText(label, cx, boxY + padY);
+        ctx.shadowColor = "rgba(13, 17, 23, 0.9)";
+        ctx.shadowBlur = 4;
+        for (let i = 0; i < n; i++) {
+          const angle = start + i * step;
+          const labelRadius = r.drawingArea * 0.9;
+          const rawX = r.xCenter + Math.cos(angle) * labelRadius;
+          const rawY = r.yCenter + Math.sin(angle) * labelRadius;
+          const lines = wrapLabel(skillLabels[i]);
+          const widestLine = Math.max(
+            ...lines.map((line) => ctx.measureText(line).width),
+            0
+          );
+          const clampedX = Math.min(
+            chart.width - widestLine / 2 - edgePadding,
+            Math.max(widestLine / 2 + edgePadding, rawX)
+          );
+          const blockHeight = (lines.length - 1) * lineHeight;
+          const startY = Math.min(
+            chart.height - fontSize - edgePadding - blockHeight,
+            Math.max(fontSize + edgePadding, rawY - blockHeight / 2)
+          );
 
-        // skill lines
-        ctx.fillStyle = "#9CA3AF";
-        ctx.font = centerBoxSkillFont;
-        skills.forEach((s, i) => {
-          ctx.fillText(s, cx, boxY + padY + lineHeight * (i + 1));
+          ctx.fillStyle = "rgba(201, 209, 217, 0.78)";
+          lines.forEach((line, idx) => {
+            ctx.fillText(line, clampedX, startY + idx * lineHeight);
+          });
+        }
+        ctx.restore();
+      },
+    };
+
+    const radarCtx = skillsRadarCanvas.getContext("2d");
+    window.skillsRadarChart = new Chart(radarCtx, {
+      type: "radar",
+      data: {
+        labels: skillLabels,
+        datasets: [
+          {
+            label: "Skill Level",
+            data: skillValues,
+            borderColor: "#8fd1ff",
+            backgroundColor: "rgba(88, 166, 255, 0.36)",
+            pointBackgroundColor: "#39d353",
+            pointBorderColor: "#d0f5dd",
+            pointHoverBackgroundColor: "#ffffff",
+            pointHoverBorderColor: "#58a6ff",
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            borderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: { top: 18, right: 20, bottom: 18, left: 20 },
+        },
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          r: {
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20,
+              color: "rgba(139, 148, 158, 0.65)",
+              backdropColor: "transparent",
+              showLabelBackdrop: false,
+              z: 10,
+              font: { size: 9 },
+            },
+            pointLabels: {
+              display: false,
+            },
+            grid: { color: "rgba(48, 54, 61, 0.75)" },
+            angleLines: { color: "rgba(48, 54, 61, 0.65)" },
+          },
+        },
+      },
+      plugins: [radarDecorPlugin],
+    });
+  }
+
+  /* =========================================================
+     MOBILE MENU
+  ========================================================= */
+  const mobileBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener("click", () =>
+      mobileMenu.classList.toggle("hidden")
+    );
+  }
+  /* =========================================================
+     HERO TERMINAL FORM (scoped)
+  ========================================================= */
+  const heroTerminalForm = document.getElementById("hero-terminal-form");
+  if (heroTerminalForm) {
+    heroTerminalForm.addEventListener("submit", (e) => e.preventDefault());
+  }
+
+  const heroMessage = document.getElementById("hero-message");
+  if (heroMessage) {
+    const resizeHeroMessage = () => {
+      heroMessage.style.height = "auto";
+      heroMessage.style.height = heroMessage.scrollHeight + "px";
+    };
+
+    heroMessage.addEventListener("input", resizeHeroMessage);
+    resizeHeroMessage();
+  }
+
+  /* =========================================================
+     CONTACT FORM (GitHub Pages friendly)
+  ========================================================= */
+  const contactForm = document.getElementById("contact-form");
+  const contactStatus = document.getElementById("contact-form-status");
+  if (contactForm && contactStatus) {
+    const submitBtn = contactForm.querySelector("button[type='submit']");
+    const formEndpoint = (contactForm.dataset.formEndpoint || "").trim();
+    const fallbackEmail = (contactForm.dataset.contactEmail || "").trim();
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!contactForm.reportValidity()) return;
+
+      if (!formEndpoint || formEndpoint.includes("REPLACE_WITH_YOUR_FORM_ID")) {
+        contactStatus.innerHTML = fallbackEmail
+          ? `Form endpoint not configured yet. For now, email me directly at <a class="text-accent underline" href="mailto:${fallbackEmail}">${fallbackEmail}</a>.`
+          : "Form endpoint is not configured. Add your Formspree endpoint in the contact form data-form-endpoint attribute.";
+        return;
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+      contactStatus.textContent = "Sending message...";
+
+      try {
+        const formData = new FormData(contactForm);
+        const res = await fetch(formEndpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: formData,
         });
 
-        ctx.restore();
+        if (!res.ok) throw new Error("Failed to submit");
 
-        // helper for rounded rect
-        function roundRect(ctx, x, y, w, h, r, fill, stroke) {
-          if (typeof r === "undefined") r = 5;
-          ctx.beginPath();
-          ctx.moveTo(x + r, y);
-          ctx.arcTo(x + w, y, x + w, y + h, r);
-          ctx.arcTo(x + w, y + h, x, y + h, r);
-          ctx.arcTo(x, y + h, x, y, r);
-          ctx.arcTo(x, y, x + w, y, r);
-          ctx.closePath();
-          if (fill) ctx.fill();
-          if (stroke) ctx.stroke();
-        }
+        contactForm.reset();
+        contactStatus.textContent = "Message sent successfully. I will get back to you soon.";
+      } catch {
+        contactStatus.textContent = "Could not send your message right now. Please try again or use email.";
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
-    }] // end plugins
-  });
+    });
+  }
 
-  // Expose for debug
-  window._skillRadarChart = chart;
+  /* =========================================================
+     HERO STATUS BAR
+  ========================================================= */
+  const netInfoEl = document.getElementById("ht-net-info");
+  const procInfoEl = document.getElementById("ht-proc-info");
+  const userIpEl = document.getElementById("ht-user-ip");
+  const hostIpEl = document.getElementById("ht-host-ip");
 
-  // Quick tips printed to console
-  console.log("Skill radar loaded. To change corner label font size, edit `cornerLabelFont` variable in the script.");
+  const setText = (el, value) => {
+    if (el) el.textContent = value;
+  };
+
+  if (netInfoEl) {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+      const type = connection.effectiveType || "unknown";
+      const downlink = typeof connection.downlink === "number" ? `${connection.downlink}Mb/s` : "n/a";
+      setText(netInfoEl, `NET: ${type.toUpperCase()} ${downlink}`);
+    } else {
+      setText(netInfoEl, "NET: ONLINE");
+    }
+  }
+
+  if (procInfoEl) {
+    const cores = navigator.hardwareConcurrency || "n/a";
+    const mem = typeof navigator.deviceMemory === "number" ? `${navigator.deviceMemory}GB` : "n/a";
+    setText(procInfoEl, `PROC: ${cores}C ${mem}`);
+  }
+
+  async function setClientIp() {
+    if (!userIpEl) return;
+    try {
+      const res = await fetch("https://api.ipify.org?format=json", { cache: "no-store" });
+      if (!res.ok) throw new Error("ipify request failed");
+      const data = await res.json();
+      setText(userIpEl, `CLIENT_IP: ${data.ip || "UNAVAILABLE"}`);
+    } catch {
+      setText(userIpEl, "CLIENT_IP: UNAVAILABLE");
+    }
+  }
+
+  async function setHostIp() {
+    if (!hostIpEl) return;
+    try {
+      const host = window.location.hostname;
+      if (!host) {
+        setText(hostIpEl, "HOST_IP: UNAVAILABLE");
+        return;
+      }
+
+      const res = await fetch(
+        `https://dns.google/resolve?name=${encodeURIComponent(host)}&type=A`,
+        { cache: "no-store" }
+      );
+      if (!res.ok) throw new Error("dns lookup failed");
+      const data = await res.json();
+      const answers = Array.isArray(data.Answer) ? data.Answer : [];
+      const record = answers.find((x) => x && typeof x.data === "string");
+      setText(hostIpEl, `HOST_IP: ${record ? record.data : "DYNAMIC_EDGE"}`);
+    } catch {
+      setText(hostIpEl, "HOST_IP: DYNAMIC_EDGE");
+    }
+  }
+
+  setClientIp();
+  setHostIp();
 });
+

@@ -5,14 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akshat</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="icon" type="image/png" href="images/favicon-fsociety.png">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- highlight.js for syntax highlighting in modals -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body class="overflow-x-hidden">
@@ -23,7 +27,7 @@
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-opacity-50 backdrop-blur-md border-b border-gray-800">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white"><< AS /></a>
+            <a href="#" class="text-2xl font-bold text-white">portfolio@akshat</a>
             <div class="hidden md:flex space-x-8">
                 <a href="#about" class="hover:text-accent transition-colors">/about</a>
                 <a href="#portfolio" class="hover:text-accent transition-colors">/portfolio</a>
@@ -41,44 +45,52 @@
             <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-700">/contact</a>
         </div>
     </header>
-
     <!-- Hero Section -->
     <section id="hero" class="h-screen relative overflow-hidden">
-        <!-- Random Quote -->
-        <div id="quote-container"
-            class="absolute inset-0 flex items-center justify-center text-center text-white text-2xl md:text-4xl font-mono z-20 px-6 opacity-0 transition-opacity duration-1000">
+        <div id="hero-terminal" class="hero-terminal">
+            <div class="ht-overlay"></div>
+            <div class="ht-scanline"></div>
+            <div class="ht-wrapper">
+                <div class="ht-content">
+                    <!-- <div class="ht-status-bar" aria-label="System status">
+                        <span id="ht-net-info">NET: DETECTING</span>
+                        <span id="ht-proc-info">PROC: BOOTING</span>
+                        <span id="ht-user-ip">CLIENT_IP: DETECTING</span>
+                        <span id="ht-host-ip">HOST_IP: DETECTING</span>
+                    </div> -->
+                    <p class="ht-prompt">&gt; initializing secure profile...</p>
+                    <h1 class="ht-name">AKSHAT SHIRSAT</h1>
+                    <p class="ht-tagline">Cybersecurity Analyst | AI &amp; Security Researcher | Bug Bounty Hunter</p>
+                    <p class="ht-divider">------------------------------------------------------------</p>
+                    <p class="ht-desc">I build practical security workflows across cloud, automation, and adversarial testing to help teams defend faster and smarter.</p>
+                    <!-- <ul class="ht-focus">
+                        <li><img src="images/CEH.png" alt="Threat detection icon" class="ht-focus-icon">Threat Detection &amp; Incident Response</li>
+                        <li><img src="images/GCS.png" alt="Cloud security icon" class="ht-focus-icon">Cloud Security &amp; Hardening</li>
+                        <li><img src="images/aws.png" alt="Automation icon" class="ht-focus-icon">Security Automation &amp; AI-assisted Analysis</li>
+                        <li><img src="images/CBSE.png" alt="Research icon" class="ht-focus-icon">CTFs, Vulnerability Research, and Bug Bounty Hunting</li>
+                    </ul> -->
+                    <p class="ht-prompt">&gt; access granted // welcome to my portfolio <span class="blinking-cursor">_</span></p>
+                    <div class="ht-cta-links" aria-label="Social and profile links">
+                        <a class="ht-cta-btn" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A2.25 2.25 0 1 0 5.25 7.5 2.25 2.25 0 0 0 5.25 3ZM20.44 13.48c0-3.16-1.69-5.18-4.47-5.18-2.06 0-2.98 1.13-3.5 1.92V8.5H9.1V20h3.38v-5.69c0-1.5.28-2.95 2.14-2.95 1.83 0 1.85 1.71 1.85 3.04V20h3.37l.01-6.52Z"></path></svg>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a class="ht-cta-btn" href="https://github.com/kingakshat" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.82-.25.82-.57v-2.02c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.75-1.34-1.75-1.1-.75.08-.74.08-.74 1.2.09 1.84 1.24 1.84 1.24 1.08 1.85 2.83 1.31 3.52 1 .1-.79.42-1.31.76-1.62-2.66-.31-5.46-1.34-5.46-5.97 0-1.32.47-2.4 1.24-3.25-.12-.31-.54-1.57.12-3.27 0 0 1.01-.32 3.31 1.24a11.36 11.36 0 0 1 6.03 0c2.3-1.56 3.31-1.24 3.31-1.24.66 1.7.24 2.96.12 3.27.77.85 1.24 1.93 1.24 3.25 0 4.64-2.8 5.66-5.48 5.96.43.37.82 1.1.82 2.23v3.3c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"></path></svg>
+                            <span>GitHub</span>
+                        </a>
+                        <a class="ht-cta-btn" href="https://www.youtube.com/channel/UC55jC4B_ux--hmPAY65XGug" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.58A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12c1.88.58 9.38.58 9.38.58s7.5 0 9.38-.58a3 3 0 0 0 2.12-2.12A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8ZM9.6 15.5v-7l6 3.5-6 3.5Z"></path></svg>
+                            <span>YouTube</span>
+                        </a>
+                        <a class="ht-cta-btn" href="https://drive.google.com/drive/folders/1fi4NvRX5-oYRr6ZZPK5v8I02bGGGri1Y" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2.5h7l5 5v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-17a2 2 0 0 1 2-2Zm6 1.8v3.2h3.2L13 4.3ZM8.5 11h7v1.8h-7V11Zm0 3.5h7v1.8h-7v-1.8Zm0 3.5h5.2v1.8H8.5V18Z"></path></svg>
+                            <span>Resume</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-        <!-- Canvas Background -->
-        <canvas id="hero-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
-
-        <!-- Hidden hero image for ASCII effect -->
-        <img id="hero-img" 
-            src="https://raw.githubusercontent.com/0xHackshat/0xHackshat7.github.io/refs/heads/main/images/ascii_crop_3.jpg" 
-            alt="Hero ASCII Source" 
-            class="hidden"
-            crossorigin="anonymous">
-
-
-        <!-- Fake Terminal Card -->
-<div class="absolute bottom-8 left-8 w-full max-w-[550px] aspect-[11/10] bg-[#0d1117] border border-gray-700 rounded-xl shadow-2xl z-10">
-    <!-- Fake Window Bar -->
-    <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-700 bg-[#161b22] rounded-t-xl">
-        <span class="w-3 h-3 rounded-full bg-red-500"></span>
-        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-        <span class="w-3 h-3 rounded-full bg-green-500"></span>
-        <span class="ml-4 text-gray-400 text-xs sm:text-sm font-mono">terminal</span>
-    </div>
-
-    <!-- Terminal Content -->
-    <div class="p-4 font-mono text-green-400 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
-        <p>$ Hello, I am <span class="text-accent">Akshat Shirsat</span></p>
-        <p>$ I am a <span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
-        <p>$ Scroll down to view my Work 👇</p>
-    </div>
-</div>
-
     </section>
 
 
@@ -110,39 +122,6 @@
                         </p>
                         <p class="text-secondary mt-4">> <span class="blinking-cursor">_</span></p>
                     </div>
-                    <!-- <div class="mt-8">
-                        <h3 class="text-2xl font-semibold mb-4">My Skills</h3>
-                        <div class="space-y-4">
-                            <div class="skill">
-                                <p class="flex justify-between mb-1"><span>Cyber Security</span><span>90%</span></p>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-accent h-2.5 rounded-full skill-bar-inner" style="width: 0%"
-                                        data-width="90%"></div>
-                                </div>
-                            </div>
-                            <div class="skill">
-                                <p class="flex justify-between mb-1"><span>Data Analyst</span><span>85%</span></p>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-accent h-2.5 rounded-full skill-bar-inner" style="width: 0%"
-                                        data-width="85%"></div>
-                                </div>
-                            </div>
-                            <div class="skill">
-                                <p class="flex justify-between mb-1"><span>Web Develo</span><span>80%</span></p>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-accent h-2.5 rounded-full skill-bar-inner" style="width: 0%"
-                                        data-width="80%"></div>
-                                </div>
-                            </div>
-                            <div class="skill">
-                                <p class="flex justify-between mb-1"><span>Python</span><span>75%</span></p>
-                                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                    <div class="bg-green h-2.5 rounded-full skill-bar-inner" style="width: 0%"
-                                        data-width="75%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -201,13 +180,13 @@
 </div>
 
 
-
-    <!-- Radar Chart (Right side) -->
     <div class="md:w-1/2 order-1 md:order-2 flex justify-center">
-        <div class="relative w-[600px] h-[600px]">
-            <canvas id="skillsRadar"></canvas>
-        </div>
-    </div>
+
+  <div class="relative w-full max-w-[420px] aspect-square mx-auto">
+  <canvas id="skillsRadar"></canvas>
+</div>
+
+</div>
       
     </div>
   </div>
@@ -249,23 +228,25 @@
                     <span class="h-3 w-3 bg-yellow-500 rounded-full mr-2"></span>
                     <span class="h-3 w-3 bg-green-500 rounded-full"></span>
                 </div>
-                <form>
+                <form id="contact-form" data-form-endpoint="https://formspree.io/f/mzdavqan" data-contact-email="akshatshirsat77+portfolio@gmail.com">
                     <div class="mb-4">
                         <label for="name" class="block mb-2 text-secondary">> Name:</label>
-                        <input type="text" id="name" name="name" class="w-full p-2 rounded-md form-input">
+                        <input type="text" id="name" name="name" class="w-full p-2 rounded-md form-input" required minlength="2">
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block mb-2 text-secondary">> Email:</label>
-                        <input type="email" id="email" name="email" class="w-full p-2 rounded-md form-input">
+                        <input type="email" id="email" name="email" class="w-full p-2 rounded-md form-input" required>
                     </div>
                     <div class="mb-4">
                         <label for="message" class="block mb-2 text-secondary">> Message:</label>
                         <textarea id="message" name="message" rows="4"
-                            class="w-full p-2 rounded-md form-input"></textarea>
+                            class="w-full p-2 rounded-md form-input" required minlength="10"></textarea>
                     </div>
+                    <input type="hidden" name="_subject" value="New portfolio message from GitHub Pages site">
                     <button type="submit" class="w-full py-2 px-4 rounded-md text-white font-bold submit-btn">
                         SEND MESSAGE
                     </button>
+                    <p id="contact-form-status" class="mt-4 text-sm text-secondary" aria-live="polite"></p>
                 </form>
             </div>
         </div>
