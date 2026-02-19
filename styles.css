@@ -178,6 +178,23 @@ body {
 .modal-body {
   padding: 1.5rem;
   overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+  word-break: break-word;
+}
+
+#project-modal .modal-body img,
+#project-modal .modal-body video,
+#project-modal .modal-body iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+#project-modal .modal-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .modal-tab {
@@ -190,6 +207,13 @@ body {
 .modal-tab.active {
   color: var(--accent);
   border-bottom-color: var(--accent);
+}
+
+#project-modal .border-b.border-gray-800.flex.px-4 {
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
 }
 
 .timeline-item {
@@ -263,6 +287,42 @@ body {
 
 #quote-container {
   transition: opacity 1s ease-in-out;
+}
+
+/* Skills section dynamic layout */
+#skills .skills-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 3.25rem);
+}
+
+#skills .skills-col {
+  width: 100%;
+  min-width: 0;
+}
+
+#skills .skills-chart-wrap {
+  width: min(100%, clamp(300px, 40vw, 500px));
+  max-width: 500px;
+}
+
+#skills .skills-cert-wrap {
+  width: min(100%, 500px);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  #skills .skills-layout {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #skills .skills-col {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+  }
 }
 html, body {
   max-width: 100%;
@@ -745,6 +805,25 @@ html, body {
 
   #hero .ht-focus li {
     white-space: normal;
+  }
+
+  #project-modal {
+    width: 96vw;
+    max-height: 92vh;
+    border-radius: 6px;
+  }
+
+  .modal-header {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .modal-tab {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.82rem;
+  }
+
+  .modal-body {
+    padding: 0.9rem;
   }
 }
 

@@ -27,7 +27,6 @@
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-opacity-50 backdrop-blur-md border-b border-gray-800">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">portfolio@akshat</a>
             <div class="hidden md:flex space-x-8">
                 <a href="#about" class="hover:text-accent transition-colors">/about</a>
                 <a href="#portfolio" class="hover:text-accent transition-colors">/portfolio</a>
@@ -134,11 +133,11 @@
     <h2 class="text-3xl font-bold text-center mb-12">
       <span class="text-accent">02.</span> Skills & Certifications
     </h2>
-    <div class="flex flex-col md:flex-row items-center gap-12">
+    <div class="skills-layout">
       
 <!-- Terminal-style Card (Left side) -->
-<div class="md:w-1/2 order-2 md:order-1">
-  <div class="bg-[#0d1117] border border-gray-800 rounded-lg p-6">
+<div class="skills-col order-2 md:order-1">
+  <div class="skills-cert-wrap bg-[#0d1117] border border-gray-800 rounded-lg p-6">
     
     <!-- Fake Terminal Bar -->
     <div class="flex items-center mb-4">
@@ -180,9 +179,9 @@
 </div>
 
 
-    <div class="md:w-1/2 order-1 md:order-2 flex justify-center">
+    <div class="skills-col order-1 md:order-2 flex justify-center">
 
-  <div class="relative w-full max-w-[420px] aspect-square mx-auto">
+  <div class="skills-chart-wrap relative w-full aspect-square mx-auto">
   <canvas id="skillsRadar"></canvas>
 </div>
 

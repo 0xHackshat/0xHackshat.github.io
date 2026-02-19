@@ -495,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "rgba(56, 189, 248, 0.24)",
       "rgba(56, 149, 235, 0.24)",
     ];
-    const LABEL_FONT_SIZE = 11;
+    const LABEL_FONT_SIZE = 20;
 
     const radarDecorPlugin = {
       id: "radarDecorPlugin",
