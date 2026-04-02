@@ -192,6 +192,24 @@ document.addEventListener("DOMContentLoaded", () => {
   snippet: { url: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6" },
   link: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6"
 },
+  {
+  id: 4,
+  title: "Axios NPM Supply Chain Attack (RAT via Malicious Dependency)",
+  category: "ctf",
+  description: "A real-world supply chain attack where the widely used Axios npm package was compromised via a hijacked maintainer account, injecting a malicious dependency that deployed a cross-platform RAT during installation.",
+  tech: ["Node.js", "npm", "Supply Chain Attack", "Malware Analysis", "Penetration Testing"],
+  features: [
+    "Compromise of npm maintainer account to publish malicious package versions",
+    "Injection of a fake dependency (plain-crypto-js) executing a postinstall script",
+    "Deployment of a cross-platform Remote Access Trojan (Windows, Linux, macOS)",
+    "Stealth techniques including self-deletion and package cleanup to evade detection",
+    "Credential harvesting targeting SSH keys, API tokens, and cloud secrets"
+  ],
+  snippet: {
+    url: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
+  },
+  link: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
+},
   ];
 
   const portfolioGrid = document.getElementById("portfolio-grid");
