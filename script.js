@@ -210,6 +210,22 @@ document.addEventListener("DOMContentLoaded", () => {
   },
   link: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
 },
+ {
+  id: 6,
+  title: "Try Hack Me CTF - MD2PDF SSRF via HTML Injection walktrough",
+  category: "ctf",
+  description: "Exploiting SSRF via HTML injection in a Markdown-to-PDF converter to access internal services.",
+  tech: ["SSRF", "HTML Injection", "Markdown-to-PDF Rendering", "wkhtmltopdf"],
+  features: [
+    "Markdown to PDF conversion with support for raw HTML rendering",
+    "Server-side PDF generation that fetches external and internal resources",
+    "Localhost-restricted admin panel accessible via SSRF through injected HTML"
+  ],
+  snippet: {
+    url: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
+  },
+  link: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
+},
   ];
 
   const portfolioGrid = document.getElementById("portfolio-grid");
