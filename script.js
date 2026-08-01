@@ -128,105 +128,142 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================================================
      PORTFOLIO DATA
   ========================================================= */
-  const projects = [
-    {
+const projects = [
+  {
     id: 0,
+    title: "Pathfinder",
+    category: "project",
+    description:
+      "An open-source Linux-first CLI tool that transforms large reconnaissance URL datasets into a structured application inventory. Pathfinder normalizes, deduplicates, and organizes URLs into hosts, endpoints, and parameters, creating a searchable SQLite-backed inventory for penetration testers and bug bounty hunters.",
+    tech: ["Python", "Typer", "SQLite", "Rich", "urllib.parse"],
+    features: [
+      "Imports URLs from files or standard input",
+      "Normalizes and deduplicates endpoints",
+      "Extracts and inventories query parameters",
+      "Builds hierarchical application trees",
+      "Stores inventories in SQLite",
+      "Displays statistics and endpoint structure"
+    ],
+    snippet: {
+      url: "https://medium.com/@akshatshirsat77/<pathfinder-article>"
+    },
+    link: "https://github.com/0xHackshat/Pathfinder"
+  },
+  {
+    id: 4,
+    title: "TryHackMe CTF – MD2PDF SSRF via HTML Injection Walkthrough",
+    category: "ctf",
+    description:
+      "A walkthrough demonstrating exploitation of Server-Side Request Forgery through HTML injection in a Markdown-to-PDF conversion service.",
+    tech: ["SSRF", "HTML Injection", "Markdown", "wkhtmltopdf"],
+    features: [
+      "Analysis of HTML injection",
+      "SSRF exploitation methodology",
+      "Access to internal services",
+      "Step-by-step walkthrough"
+    ],
+    snippet: {
+      url: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
+    },
+    link: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
+  },
+
+  {
+    id: 5,
+    title: "Axios NPM Supply Chain Attack (RAT via Malicious Dependency)",
+    category: "ctf",
+    description:
+      "An analysis of a real-world npm supply chain compromise where malicious package versions deployed a cross-platform Remote Access Trojan during installation.",
+    tech: ["Node.js", "npm", "Supply Chain Security", "Malware Analysis"],
+    features: [
+      "Compromised maintainer account analysis",
+      "Malicious dependency investigation",
+      "Cross-platform RAT execution",
+      "Detection evasion techniques",
+      "Credential theft analysis"
+    ],
+    snippet: {
+      url: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
+    },
+    link: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
+  },
+
+  {
+    id: 6,
+    title: "Solar System Overview CTF Write-Up",
+    category: "ctf",
+    description:
+      "A web exploitation challenge demonstrating SQL injection against an API endpoint to enumerate databases and retrieve sensitive information.",
+    tech: ["SQL Injection", "API Security", "Web Exploitation", "Penetration Testing"],
+    features: [
+      "API SQL injection discovery",
+      "Database enumeration",
+      "Table and column extraction",
+      "Flag retrieval walkthrough"
+    ],
+    snippet: {
+      url: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6"
+    },
+    link: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6"
+  },
+  
+  {
+    id: 1,
     title: "Blockchain Framework for Web3 Transactions",
     category: "project",
     description:
-      "A peer-to-peer blockchain network of 15 devices running PoW algorithms and consensus mechanisms, integrating smart contracts and secure transaction flows that improved transaction security & anonymity by using cryptography, hashing, and digital signatures.",
+      "A peer-to-peer blockchain network of 15 devices implementing Proof of Work, smart contracts, and secure transaction flows using modern cryptographic techniques.",
     tech: ["Python", "Cryptography", "Hashing", "Digital Signatures"],
     features: [
-      "Consensus mechanism implementation (Proof of Work)",
+      "Proof-of-Work consensus implementation",
       "Smart contract integration",
       "Secure peer-to-peer transactions",
-      "Improved anonymity through cryptographic methods"
+      "Cryptographic authentication and integrity"
     ],
-    snippet: { url: "https://medium.com/@akshatshirsat77/blockchain-powered-vehicle-rentals-a-smarter-safer-mobility-future-9c6fe5422cd5" },
+    snippet: {
+      url: "https://medium.com/@akshatshirsat77/blockchain-powered-vehicle-rentals-a-smarter-safer-mobility-future-9c6fe5422cd5"
+    },
     link: "https://github.com/R-A-N-G/Blockchain/"
   },
-  {
-    id: 1,
-    title: "Web Application SQL Injection Scanner",
-    category: "project",
-    description:
-      "Developed a Python-based scanner that identifies vulnerabilities in URLs and HTML forms by detecting unsafe input parameters and SQL injection possibilities.",
-    tech: ["Python", "Requests", "Regex"],
-    features: [
-      "Scans URLs and HTML forms",
-      "Detects SQL injection points",
-      "Supports GET and POST methods",
-      "Lightweight and scriptable tool"
-    ],
-    snippet: { url: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python" },
-    link: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python"
-  },
+
   {
     id: 2,
     title: "Network Tracking & Visualization",
     category: "project",
     description:
-      "A system integrating Wireshark with Python & Google Earth to monitor network traffic, detect anomalies, and visualize IP geolocation.",
+      "A network monitoring system integrating Wireshark with Python and Google Earth to analyze traffic, detect anomalies, and visualize IP geolocations.",
     tech: ["Wireshark", "Python", "Google Earth"],
     features: [
-      "Packet capture and parsing",
-      "Anomaly detection",
+      "Packet capture and analysis",
+      "Network anomaly detection",
       "IP geolocation visualization",
-      "Real-time monitoring dashboard"
+      "Real-time traffic monitoring"
     ],
-    snippet: { url: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization" },
+    snippet: {
+      url: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization"
+    },
     link: "https://github.com/kingakshat/Wireshark-Python-Network-Traffic-Visualization"
   },
 
   {
-  id: 3,
-  title: "Solar System Overview CTF Write-Up",
-  category: "ctf",
-  description: "A web exploitation challenge involving SQL injection via an API endpoint, leading to unauthorized data access.",
-  tech: ["Web Exploitation", "SQL Injection", "API Security", "Penetration Testing"],
-  features: [
-    "Identified an API endpoint vulnerable to SQL injection",
-    "Exploited the vulnerability to enumerate database tables and columns",
-    "Extracted sensitive data, including a flag, from the database"
-  ],
-  snippet: { url: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6" },
-  link: "https://medium.com/@akshatshirsat77/why-ctf-2025-challenge-write-up-solar-system-overview-8b92ee94feb6"
-},
-  {
-  id: 4,
-  title: "Axios NPM Supply Chain Attack (RAT via Malicious Dependency)",
-  category: "ctf",
-  description: "A real-world supply chain attack where the widely used Axios npm package was compromised via a hijacked maintainer account, injecting a malicious dependency that deployed a cross-platform RAT during installation.",
-  tech: ["Node.js", "npm", "Supply Chain Attack", "Malware Analysis", "Penetration Testing"],
-  features: [
-    "Compromise of npm maintainer account to publish malicious package versions",
-    "Injection of a fake dependency (plain-crypto-js) executing a postinstall script",
-    "Deployment of a cross-platform Remote Access Trojan (Windows, Linux, macOS)",
-    "Stealth techniques including self-deletion and package cleanup to evade detection",
-    "Credential harvesting targeting SSH keys, API tokens, and cloud secrets"
-  ],
-  snippet: {
-    url: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
-  },
-  link: "https://medium.com/p/302ee17e659b?postPublishedType=initial"
-},
- {
-  id: 6,
-  title: "Try Hack Me CTF - MD2PDF SSRF via HTML Injection walktrough",
-  category: "ctf",
-  description: "Exploiting SSRF via HTML injection in a Markdown-to-PDF converter to access internal services.",
-  tech: ["SSRF", "HTML Injection", "Markdown-to-PDF Rendering", "wkhtmltopdf"],
-  features: [
-    "Markdown to PDF conversion with support for raw HTML rendering",
-    "Server-side PDF generation that fetches external and internal resources",
-    "Localhost-restricted admin panel accessible via SSRF through injected HTML"
-  ],
-  snippet: {
-    url: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
-  },
-  link: "https://github.com/0xHackshat/Write-Ups-Walkthroughs/blob/main/Try%20Hack%20Me%20CTF/MD2PDF_SSRF%20via%20HTML%20Injection_walkthrough.md"
-},
-  ];
+    id: 3,
+    title: "Web Application SQL Injection Scanner",
+    category: "project",
+    description:
+      "A lightweight Python-based scanner that identifies SQL injection vulnerabilities in web applications by analyzing URLs and HTML forms.",
+    tech: ["Python", "Requests", "Regex"],
+    features: [
+      "Scans URLs and HTML forms",
+      "Detects SQL injection opportunities",
+      "Supports GET and POST requests",
+      "Lightweight and scriptable"
+    ],
+    snippet: {
+      url: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python"
+    },
+    link: "https://github.com/kingakshat/Web-Application-SQL-Injection-Scanner-with-Python"
+  }
+];
 
   const portfolioGrid = document.getElementById("portfolio-grid");
   const filterBtns = document.querySelectorAll(".filter-btn");
