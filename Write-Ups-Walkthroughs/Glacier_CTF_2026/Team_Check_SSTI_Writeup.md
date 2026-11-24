@@ -1,3 +1,4 @@
+{% raw %}
 # Team-Check — Server-Side Template Injection (SSTI) Writeup
 
 Team-Check — Server-Side Template Injection (SSTI) Writeup
@@ -156,3 +157,4 @@ Never pass user input into render_template_string() at all. Pass the team name a
 If dynamic templates are unavoidable, use Jinja2's SandboxedEnvironment, which restricts attribute access to the kind of gadget chain used here (__init__, __globals__, __builtins__).
 
 Treat any character-level blocklist on template syntax as insufficient on its own — it should back a safer renderer, not substitute for one.
+{% endraw %}
